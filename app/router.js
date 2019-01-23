@@ -12,7 +12,6 @@ const { wechatUrlVerify } = require('./controller/wechat.js');
  */
 router.get('/root', root);
 router.get('/', wechatUrlVerify);
-router.get('/wx', wechatUrlVerify)
 
 module.exports = function(app) {
   app.use(router.routes());

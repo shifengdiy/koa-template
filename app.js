@@ -1,6 +1,8 @@
 const Koa = require('koa');
 const app = new Koa();
 
+const { port } = require('./app/config/app.config.js');
+
 //获取所需要的处理模块，核心模块是路由信息处理，包含请求路径处理
 
 //路由模块，路径请求和控制器
@@ -25,5 +27,5 @@ app.use(function (ctx, next) {
   next();
 })
 
-app.listen('10050');
+app.listen(port);
 console.log('koa启动');
