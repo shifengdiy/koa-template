@@ -1,6 +1,8 @@
+const fs = require('fs');
+
 const root = function(ctx) {
-  ctx.response.type = 'text/html';
-  ctx.response.body = '<h1>hello Koa</>';
+  ctx.response.type = 'html';
+  ctx.response.body = fs.createReadStream('./app/view/index.html');;
 }
 
 module.exports = {

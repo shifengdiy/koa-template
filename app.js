@@ -10,7 +10,7 @@ const staticSourcePlugin = require('./app/middleware/staticFile.js');
 //session和cookie插件配置和httpbody解析
 const httpParsePlugin = require('./app/middleware/httpParse.js');
 //微信公众号的access_token和各种凭证的定时刷新
-const wechatTokenSchedule = require('./app/service/wechatTokenSchedule.js');
+const wechatTokenSchedule = require('./app/utils/wechatTokenSchedule.js');
 
 //执行中间件
 httpParsePlugin(app);
