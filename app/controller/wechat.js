@@ -74,13 +74,14 @@ const initMenuBar = function(accessToken) {
     json: true,
     headers: {
       "content-type": "application/json",
+      'Content-Length': Buffer.byteLength(JSON.stringify(requestData), 'utf8')
     },
     body: JSON.stringify(requestData)
   };
 
   request(reqOptions, function(err, res, body) {
     if (!err && res.statusCode == 200) {
-      console.log('初始化菜单成功', typeof body, body);
+      console.log('初始化菜单成功', body);
     } else {
       throw(err);
     }
