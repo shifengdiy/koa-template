@@ -32,7 +32,7 @@ const getBaseAccessToken = function(ctx) {
   return new Promise(function(resolve, reject) {
     request.get(tokenRequestUrl, function(err, res, body) {
       console.log(body);
-      if (!err && res.statusCode == 200) {
+      if (!err) {
         resolve(body.access_token);
       } else {
         reject(err);
@@ -50,7 +50,7 @@ const getJsapiTicket = function() {
   return new Promise(function(resolve, reject) {
     request.get(ticketRequestUrl, function(err, res, body) {
       console.log(body);
-      if (!err && res.statusCode == 200) {
+      if (!err) {
         resolve(body.ticket);
       } else {
         reject(err);
