@@ -58,12 +58,12 @@ const getJsapiTicket = function() {
   })
 }
 
-const initMenuBar = function() {
+const initMenuBar = function(accessToken) {
   const wechatConfig = require('../config/wechat.config');
   const wechatMenuConfig = require('../config/wechatMenu.config');
 
   const requestData = wechatMenuConfig;
-  const reqUrl = `https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${global.access_token}`;
+  const reqUrl = `https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${accessToken}`;
   const reqOptions = {
     url: reqUrl,
     method: "POST",
@@ -76,7 +76,7 @@ const initMenuBar = function() {
 
   request(reqOptions, function(err, res, body) {
     if (!err && res.statusCode == 200) {
-      console.log('初始化菜单成功');
+      console.log('初始化菜单成功', body);
     } else {
       throw(err);
     }

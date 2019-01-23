@@ -10,9 +10,10 @@ module.exports = async function() {
   //首先第一次执行，之后定时执行
   global.access_token = await getBaseAccessToken(); 
   global.jsapi_ticket = await getJsapiTicket();
+  console.log('凭证获取完毕\n', global.access_token, '\n', global.jsapi_ticket);
   
   //获取到access_token之后，开始初始化菜单
-  initMenuBar();
+  initMenuBar(global.access_token);
 
   setInterval(async function () {
     global.access_token = await getBaseAccessToken();
