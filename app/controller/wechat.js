@@ -31,9 +31,10 @@ const getBaseAccessToken = function(ctx) {
   //发起请求获取access_token
   return new Promise(function(resolve, reject) {
     request.get(tokenRequestUrl, function(err, res, body) {
-      console.log(body);
+      //console.log(body);
       if (!err) {
-        resolve(body.access_token);
+        let resObj = JSON.parse(body);
+        resolve(resObj.access_token);
       } else {
         reject(err);
         throw (err);
@@ -51,7 +52,8 @@ const getJsapiTicket = function() {
     request.get(ticketRequestUrl, function(err, res, body) {
       console.log(body);
       if (!err) {
-        resolve(body.ticket);
+        let resObj = JSON.parse(body);
+        resolve(resObj.ticket);
       } else {
         reject(err);
         throw(err);
@@ -78,7 +80,7 @@ const initMenuBar = function(accessToken) {
 
   request(reqOptions, function(err, res, body) {
     if (!err && res.statusCode == 200) {
-      console.log('初始化菜单成功', body);
+      console.log('初始化菜单成功', typeof body, body);
     } else {
       throw(err);
     }
