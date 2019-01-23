@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "koa-app",
-=======
-  "name": "baotou_koa2",
->>>>>>> 705d01a48cafb9b4dff263f0866b7f6f582da841
   "version": "1.0.0",
   "description": "wechat koa",
   "main": "index.js",
