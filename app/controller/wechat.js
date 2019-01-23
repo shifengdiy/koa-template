@@ -31,6 +31,7 @@ const getBaseAccessToken = function(ctx) {
   //发起请求获取access_token
   return new Promise(function(resolve, reject) {
     request.get(tokenRequestUrl, function(err, res, body) {
+      console.log(res, body);
       if (!err && res.statusCode == 200) {
         resolve(body.access_token);
       } else {
@@ -48,6 +49,7 @@ const getJsapiTicket = function() {
   //发起获取票据请求
   return new Promise(function(resolve, reject) {
     request.get(ticketRequestUrl, function(err, res, body) {
+      console.log(res, body);
       if (!err && res.statusCode == 200) {
         resolve(body.ticket);
       } else {
