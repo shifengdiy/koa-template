@@ -11,12 +11,12 @@ module.exports = {
         {
           "type": "view",
           "name": "手动上报",
-          "url": "report_url"
+          "url": "http://zhzm.xtdsglc.com/reportHistory"
         },
         {
           "type": "view",
           "name": "报修记录",
-          "url": "reportList_url"
+          "url": "http://zhzm.xtdsglc.com/reportHistory"
 
         }
       ]
@@ -27,7 +27,7 @@ module.exports = {
         {
           "type": "view",
           "name": "意见反馈",
-          "url": "suggest_react_url"
+          "url": "http://zhzm.xtdsglc.com/reportHistory"
         },
         {
           "type": "view",
