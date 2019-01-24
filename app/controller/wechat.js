@@ -73,8 +73,8 @@ const initMenuBar = function(accessToken) {
     method: "POST",
     json: true,
     headers: {
-      "content-type": "application/json",
-      'Content-Length': Buffer.byteLength(JSON.stringify(requestData), 'utf8')
+      "Content-Type": "application/json",
+      //'Content-Length': Buffer.byteLength(JSON.stringify(requestData), 'utf8')
     },
     body: JSON.stringify(requestData)
   };
