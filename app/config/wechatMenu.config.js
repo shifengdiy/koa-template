@@ -10,12 +10,12 @@ module.exports = {
         },
         {
           "type": "view",
-          "name": "手动上报",
-          "url": "http://zhzm.xtdsglc.com/reportHistory"
+          "name": "游园",
+          "url": "https://mall.leyoobao.com/H5-MAP/nologo/index.html?sid=1909"
         },
         {
           "type": "view",
-          "name": "报修记录",
+          "name": "测试",
           "url": "http://zhzm.xtdsglc.com/reportHistory"
         }
       ]
