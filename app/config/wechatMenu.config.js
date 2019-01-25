@@ -1,3 +1,12 @@
+const wechatConfig = require('./wechat.config');
+const redirectBaseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize';
+
+const reportQuestionUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getReportQuestionView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
+const commentUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getCommentView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
+const commentListUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getCommentListView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
+const parkInfoUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getParkInfoView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
+const organInfoUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getOrganInfoView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
+
 module.exports = {
   "button": [
     {
@@ -6,17 +15,17 @@ module.exports = {
         {
           "type": "view",
           "name": "故障上报",
-          "url": "https://mall.leyoobao.com/H5-MAP/nologo/index.html?sid=1909&source=wx1909"
+          "url": reportQuestionUrl,
         },
         {
           "type": "view",
           "name": "留言建议",
-          "url": "https://mall.leyoobao.com/H5-MAP/nologo/index.html?sid=1909&source=wx1909"
+          "url": commentUrl,
         },
         {
           "type": "view",
           "name": "留言列表",
-          "url": "http://zhzm.xtdsglc.com/reportHistory"
+          "url": commentListUrl,
         }
       ]
     },
@@ -31,12 +40,12 @@ module.exports = {
         {
           "type": "view",
           "name": "园林简介",
-          "url": "https://mall.leyoobao.com/H5-MAP/nologo/index.html?sid=1909&source=wx1909"
+          "url": parkInfoUrl,
         },
         {
           "type": "view",
           "name": "机构简介",
-          "url": "https://mall.leyoobao.com/H5-MAP/nologo/index.html?sid=1909&source=wx1909"
+          "url": organInfoUrl,
         },
         {
           "type": "view",

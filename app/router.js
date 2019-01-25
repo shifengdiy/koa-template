@@ -15,7 +15,9 @@ router.post('/', receiveMsg);
 /**
  * 公园信息简介的相关处理
  */
-const {} = require('./controller/introInfo.js');
+const { getParkInfoView, getOrganInfoView } = require('./controller/introInfo.js');
+router.get('/getParkInfoView', getParkInfoView);
+router.get('/getOrganInfoView', getOrganInfoView);
 
 
 /**
