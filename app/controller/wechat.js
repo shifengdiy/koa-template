@@ -87,9 +87,15 @@ const initMenuBar = function(accessToken) {
   })
 }
 
+const receiveMsg = function(ctx) {
+  console.log(ctx);
+  ctx.response.body = "";
+}
+
 module.exports = {
   wechatUrlVerify,
   getBaseAccessToken,
   getJsapiTicket,
   initMenuBar,
+  receiveMsg,
 }
