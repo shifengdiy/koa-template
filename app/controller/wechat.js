@@ -1,4 +1,5 @@
 const request = require('request');
+const fs = require('fs');
 
 /**
  * 和微信公众号配置相关的接口响应，微信有大量的服务器通信接口，令牌获取，url验证，jssdk验证等
