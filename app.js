@@ -24,6 +24,7 @@ wechatTokenSchedule();
 router(app);
 
 app.use(function (ctx, next) {
+  console.log(ctx);
   next();
 })
 
