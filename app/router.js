@@ -7,7 +7,7 @@ router.get('/root', root);
 
 
 //微信公众号相关接口验证
-const { wechatUrlVerify, receiveMsg } = require('./controller/wechat.js');
+const { wechatUrlVerify, receiveMsg, verifyJsApi } = require('./controller/wechat.js');
 router.get('/', wechatUrlVerify);
 router.get('/MP_verify_dB9jPoeVC45c0ChR.txt', verifyJsApi);
 router.post('/', receiveMsg);
