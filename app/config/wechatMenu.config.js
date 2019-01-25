@@ -3,9 +3,9 @@ const redirectBaseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 
 const reportQuestionUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getReportQuestionView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
 const commentUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getCommentView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
-const commentListUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getCommentListView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
-const parkInfoUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getParkInfoView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
-const organInfoUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getOrganInfoView&response_type=code&scope=snsapi_userinfo&state=report#wechat_redirect`;
+const commentListUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getCommentListView&response_type=code&scope=snsapi_base&state=report#wechat_redirect`;
+const parkInfoUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getParkInfoView&response_type=code&scope=snsapi_base&state=report#wechat_redirect`;
+const organInfoUrl = `${redirectBaseUrl}?appid=${wechatConfig.appId}&redirect_uri=${wechatConfig.serverUrl}/getOrganInfoView&response_type=code&scope=snsapi_base&state=report#wechat_redirect`;
 
 module.exports = {
   "button": [

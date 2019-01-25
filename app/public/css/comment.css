@@ -1,0 +1,36 @@
+.app-page .title {
+  font-size: 22px; }
+
+.app-page #comment-text {
+  width: 100%;
+  padding: 10px;
+  line-height: 1.41;
+  font-size: 14px;
+  background-image: none;
+  box-shadow: none;
+  display: block;
+  box-sizing: border-box;
+  margin: 20px 0;
+  border: 1px solid #999;
+  border-bottom: 1px solid #999;
+  border-right: 1px solid #999;
+  border-radius: 2px;
+  transition: all 188ms ease-out; }
+  .app-page #comment-text:focus {
+    outline: none;
+    border: 1px solid #409eff; }
+
+.app-page .submit-btn {
+  width: 5em;
+  padding: 12px 8px;
+  line-height: 1;
+  background-color: #409eff;
+  color: #fff;
+  margin: 30px auto 0;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 16px; }
+  .app-page .submit-btn:hover, .app-page .submit-btn:active {
+    box-shadow: 2px 2px 4px 0 #666; }
+
+/*# sourceMappingURL=comment.css.map */
