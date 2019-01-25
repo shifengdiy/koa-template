@@ -92,10 +92,16 @@ const receiveMsg = function(ctx) {
   ctx.response.body = "";
 }
 
+const verifyJsApi = function(ctx) {
+  ctx.response.type = 'text';
+  ctx.response.body = fs.createReadStream('./MP_verify_dB9jPoeVC45c0ChR.txt');
+}
+
 module.exports = {
   wechatUrlVerify,
   getBaseAccessToken,
   getJsapiTicket,
   initMenuBar,
   receiveMsg,
+  verifyJsApi,
 }
