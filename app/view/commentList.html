@@ -4,9 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/commentList.css">
+  <script src="./vendor/vue/vue.js"></script>
+  <script src="./vendor/jquery/jquery.js"></script>
   <title>留言列表</title>
 </head>
 <body>
-  
+  <div class="app-page">
+    <div class="commnent-card" v-for="item in commentList">
+      <div class="comment-header">
+          <div>留言</div>
+          <div class="date">{{item.commentDate}}</div>
+      </div>
+      <div class="comment-body">
+        {{item.commentContent}}
+      </div>
+      <div class="show-replay" @click="showReply(item)" v-show="!item.isShowReply">查看回复</div>
+      <div class="reply-panel" v-show="item.isShowReply">
+        <div class="reply-header">
+          <div>留言回复</div>
+          <div class="date">{{item.replyDate}}</div>
+        </div>
+        <div class="reply-body">{{item.replyContent}}</div>
+        <div class="collapse-reply" @click="collapseReply(item)">收起回复</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var commentListEl = new Vue({
+    el: '.app-page',
+    name: 'commentListEl',
+    data: {
+      commentList: [{
+        replyContent: 'Google 的免费翻译服务可提供简体中文和另外100 多种语言之间的互译功能，可让您即时翻译字词、短语和网页内容。',
+        replyDate: '2018-02-03',
+        commentContent: 'Google 的免费翻译服务可提供简体中文和另外100 多种语言之间的互译功能，可让您即时翻译字词、短语和网页内容。',
+        commentDate: '2019-02-03',
+        isShowReply: false,
+      }]
+    },
+    mounted: function() {
+      var self = this;
+      $.ajax({
+        url: 'getCommentList',
+        type: 'post',
+        dataType: 'json',
+        success: function(res) {
+          self.commentList = res;
+        },
+        error: function(err) {
+          
+        },
+      })
+    },
+    methods: {
+      showReply: function(item) {
+        item.isShowReply = true;
+      },
+      collapseReply: function(item) {
+        item.isShowReply = false;
+      },
+    }
+  })
+</script>
 </body>
 </html>

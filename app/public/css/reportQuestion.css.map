@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "reportQuestion.css",
+	"sources": [
+		"../sass/reportQuestion.scss"
+	],
+	"names": [],
+	"mappings": "AAAA,AACE,SADO,CACP,MAAM,CAAC;EACL,SAAS,EAAE,IAAI;EACf,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,GAAG,GACjB;;AALH,AAME,SANO,CAMP,aAAa,CAAC;EACZ,aAAa,EAAE,IAAI,GACpB;;AARH,AASE,SATO,CASP,cAAc,CAAC;EACb,UAAU,EAAE,MAAM;EAClB,UAAU,EAAE,IAAI,GACjB"
+}

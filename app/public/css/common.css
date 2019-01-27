@@ -4,6 +4,7 @@ body {
 
 .app-page {
   min-height: 100vh;
-  margin: 8px; }
+  padding: 10px;
+  box-sizing: border-box; }
 
 /*# sourceMappingURL=common.css.map */

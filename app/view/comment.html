@@ -5,28 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./vendor/vue/element.css">
   <link rel="stylesheet" href="./css/comment.css">
   <script src="./vendor/vue/vue.js"></script>
+  <script src="./vendor/vue/element.js"></script>
   <script src="./vendor/jquery/jquery.js"></script>
   <title>留言板</title>
 </head>
 <body>
   <div class="app-page">
-    <h1 class="title">请留下您的建议：</h1>
-    <textarea id="comment-text" v-model="commentText" placeholder="请输入内容" cols="30" rows="10"></textarea>
-    <div class="submit-btn" @click="submitComment">提交留言</div>
+    <div class="title">请留下您的建议：</div>
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="top" class="demo-ruleForm">
+      <el-form-item label="留言内容" prop="reportContent">
+        <el-input type="textarea" :autosize="{minRows: 4}" v-model="ruleForm.commentText"></el-input>
+      </el-form-item>
+      <el-form-item class="operate-panel">
+        <el-button type="primary" @click="submitForm('ruleForm')">立即提交</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 <script>
-  var app = new Vue({
+  var commentEl = new Vue({
     el: '.app-page',
+    name: 'commentEl',
     data: {
-      commentText: ''
+      ruleForm: {
+        commentText: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入设施名称', trigger: 'blur' },
+          { min: 3, message: '字符长度不少于三个', trigger: 'blur' }
+        ],
+        commentText: [
+          { required: true, message: '请填写故障内容', trigger: 'blur' },
+          { min: 10, max: 400, message: '内容长度在10到400之间', trigger: 'blur' }
+        ]
+      }
     },
     methods: {
-      submitComment: function() {
-        
+      submitForm(formName) {
+        // var loading = this.$loading({
+        //   lock: true,
+        //   text: '正在提交',
+        //   //spinner: 'el-icon-loading',
+        //   background: 'rgba(0, 0, 0, 0.7)'
+        // });
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            $.ajax({
+              url: 'postCommentMsg',
+              type: 'post',
+              dataType: 'json',
+              data: {
+                commentText: this.commentText,
+              },
+              success: function(res) {
+                if(res.success){ 
+                  alert('留言成功');
+                }
+              },
+              error: function(err) {
+                alert('留言失败，请返回公众号重试');
+              }
+            })
+          } else {
+            alert('信息填写不正确');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
-    }
+    }, 
   })
 </script>
 </body>
