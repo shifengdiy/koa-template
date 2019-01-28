@@ -26,6 +26,7 @@ const getOpenIdByCode = function (code, resolve){
 
   request(reqOptions, function (err, res, body) {
     if (!err && res.statusCode == 200) {
+      console.log(body, '获取openid');
       resolve(body.openid);
 
       //缓存全局webaccessToken
@@ -50,8 +51,7 @@ const refreshWebAccessToken = function(refreshToken){
 
     request(reqOptions, function (err, res, body) {
       if (!err && res.statusCode == 200) {
-        console.log(body, '获取openid');
-        resolve(body.openid)
+        resolve(body)
       } else {
         throw (err);
       }
