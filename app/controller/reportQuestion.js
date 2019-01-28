@@ -42,7 +42,7 @@ const getReportQuestionView = function(ctx) {
 }
 
 //查询留言信息列表
-const getCommentLisData = function(ctx) {
+const getCommentLisData = async function(ctx) {
   const openId = ctx.session.openId;
   const resObj = {};
   try {
@@ -93,13 +93,54 @@ const postCommentData = async function(ctx) {
 }
 
 //用户提交故障信息
-const postDeviceDefualtData = function(ctx) {
-  
+const postDeviceDefualtData = async function(ctx) {
+  let postData = ctx.request.body;
+  let openId = ctx.session.openId;
+  let currentDateStamp = new Date().getTime().toString();
+  let resObj = {};
+
+  try {
+    await mssql.connect(dataBase);
+    let querySql = `INSERT INTO reportQuestion (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    const queryRes = await mssql.query(querySql);
+
+    if (queryRes.rowsAffected[0] == 1) {
+      resObj.success = true;
+    } else {
+      resObj.success = false;
+      resObj.body = queryRes;
+    }
+  } catch (error) {
+    resObj.success = false;
+    resObj.body = error;
+  }
+
+  ctx.response.type = 'json';
+  ctx.response.body = JSON.stringify(resObj);
 }
 
 //获取当前用户上报的故障列表
-const getDeviceDefaultListData = function(ctx){
+const getDeviceDefaultListData = async function(ctx){
+  const openId = ctx.session.openId;
+  const resObj = {};
+  try {
+    await mssql.connect(dataBase);
+    let querySql = `select * from dbo.reportQuestion where openId=${openId}`;
+    const queryRes = await mssql.query(querySql);
 
+    if (queryRes.rowsAffected[0] == 1) {
+      resObj.success = true;
+    } else {
+      resObj.success = false;
+      resObj.body = queryRes;
+    }
+  } catch (error) {
+    resObj.success = false;
+    resObj.body = error;
+  }
+
+  ctx.response.type = 'json';
+  ctx.response.body = JSON.stringify(resObj);
 }
 
 module.exports = {
