@@ -2,16 +2,9 @@ const request = require('request');
 const { appId, appSecret } = require('../config/wechat.config');
 
 const getWebAccessTokenByCode = function(code){ 
-  return new Promise(async function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
     //判断openid是否存在，如果存在说明请求已经存在，web_access_token已经再刷新 
-    const reqRes = await getOpenIdByCode(code);
-    console.log(reqRes, '返回结果')
-    const openId = reqRes.openid;
-    resolve(openId);
-
-    //缓存全局webaccessToken
-    global.webAccessToken = reqRes.access_token;
-    global.webRefreshAccessToken = reqRes.refresh_token;
+    getOpenIdByCode(code, resolve);
 
     //开始设置web_access_token刷新
     setInterval(async function () {
@@ -22,24 +15,27 @@ const getWebAccessTokenByCode = function(code){
   })
 }
 
-const getOpenIdByCode = function(code){
-  let getTokenUrl = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appId}&secret=${appSecret}&code=${code}&grant_type=authorization_code`;
+const getOpenIdByCode = function (code, resolve){
+  let getTokenUrl = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appId}&secret=${appSecret}&code=${code}&grant_type=authorization_code`; 
 
-  return new Promise(function(resolve, reject){
-    const reqOptions = {
-      url: getTokenUrl,
-      method: "GET",
-      json: true,
-    };
+  const reqOptions = {
+    url: getTokenUrl,
+    method: "GET",
+    json: true,
+  };
 
-    request(reqOptions, function (err, res, body) {
-      if (!err && res.statusCode == 200) {
-        resolve(body);
-      } else {
-        throw (err);
-      }
-    })
+  request(reqOptions, function (err, res, body) {
+    if (!err && res.statusCode == 200) {
+      resolve(body.openid);
+
+      //缓存全局webaccessToken
+      global.webAccessToken = body.access_token;
+      global.webRefreshAccessToken = body.refresh_token;
+    } else {
+      throw (err);
+    }
   })
+ 
 }
 
 const refreshWebAccessToken = function(refreshToken){
