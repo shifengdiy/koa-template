@@ -11,7 +11,8 @@ const getCommentView = async function(ctx) {
 
   //设置openid到session，设置acess_token定时刷新
   getWebAccessTokenByCode(code, ctx);
-
+  ctx.session.xx = '测试'
+  console.log(ctx.session, 'session数据');
   //返回留言视图页面
   ctx.response.type = 'html';
   ctx.response.body = fs.createReadStream('./app/view/comment.html');
@@ -76,7 +77,7 @@ const postCommentData = async function(ctx) {
   console.log(postData)
   try {
     await mssql.connect(dataBase);
-    let querySql = `INSERT INTO dbp.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
     console.log(querySql)
     const queryRes = await mssql.query(querySql);
     mssql.close();
