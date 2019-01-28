@@ -11,7 +11,7 @@ const getCommentView = async function(ctx) {
 
   //设置openid到session，设置acess_token定时刷新
   if(!ctx.session.openId){
-    ctx.session.openId = getWebAccessTokenByCode(code);
+    ctx.session.openId = await getWebAccessTokenByCode(code);
   }
   
   ctx.session.xx = '测试'
