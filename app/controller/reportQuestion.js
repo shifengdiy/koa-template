@@ -1,5 +1,4 @@
 const fs = require('fs');
-const request = require('request');
 
 const { dataBase } = require('../config/app.config');
 const mssql = require('mssql'); 
