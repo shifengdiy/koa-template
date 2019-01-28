@@ -67,13 +67,14 @@ const getCommentLisData = async function(ctx) {
 
 //提交用户当前留言
 const postCommentData = async function(ctx) {
-  await mssql.connect(dataBase);
+  
   let postData = ctx.request.body;
   let openId = ctx.session.openId;
   let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
 
   try {
+    await mssql.connect(dataBase);
     let querySql = `INSERT INTO commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
     const queryRes = await mssql.query(querySql);
 
