@@ -25,6 +25,7 @@ const getOpenIdByCode = function (code, resolve){
   };
 
   request(reqOptions, function (err, res, body) {
+    console.log(err, body, '请求数据')
     if (!err && res.statusCode == 200) {
       console.log(body, '获取openid');
       resolve(body.openid);
