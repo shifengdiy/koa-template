@@ -10,7 +10,7 @@ router.get('/root', root);
 const { wechatUrlVerify, receiveMsg, verifyJsApi } = require('./controller/wechat.js');
 router.get('/', wechatUrlVerify);
 router.get('/MP_verify_dB9jPoeVC45c0ChR.txt', verifyJsApi);
-router.post('/', receiveMsg);
+//router.post('/', receiveMsg);
 
 
 /**
