@@ -34,7 +34,7 @@ const getWebAccessTokenByCode = function(code){
 }
 
 const refreshWebAccessToken = function(refreshToken){
-  let refreshTokenUrl = `https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=${APPID}&grant_type=refresh_token&refresh_token=${refreshToken}`;
+  let refreshTokenUrl = `https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=${appId}&grant_type=refresh_token&refresh_token=${refreshToken}`;
  
   const reqOptions = {
     url: refreshTokenUrl,
@@ -48,7 +48,7 @@ const refreshWebAccessToken = function(refreshToken){
       global.webAccessToken = body.access_token;
       global.webRefreshAccessToken = body.refresh_token;
     } else {
-      //throw (err);
+      throw (err);
     }
   })
  
