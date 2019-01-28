@@ -60,7 +60,7 @@ const getCommentLisData = async function(ctx) {
     resObj.success = false;
     resObj.body = error;
   }
-
+  console.log(resObj);
   ctx.response.type = 'json';
   ctx.response.body = JSON.stringify(resObj);
 }
@@ -88,7 +88,7 @@ const postCommentData = async function(ctx) {
     resObj.success = false;
     resObj.body = error;
   }
-
+  console.log(resObj);
   ctx.response.type = 'json';
   ctx.response.body = JSON.stringify(resObj);
 }
