@@ -10,7 +10,10 @@ const getCommentView = async function(ctx) {
   const { getWebAccessTokenByCode } = require('../service/wechatTokenRequest');
 
   //设置openid到session，设置acess_token定时刷新
-  getWebAccessTokenByCode(code, ctx);
+  if(!ctx.session.openId){
+    ctx.session.openId = getWebAccessTokenByCode(code);
+  }
+  
   ctx.session.xx = '测试'
   console.log(ctx.session, 'session数据');
   //返回留言视图页面
@@ -75,10 +78,10 @@ const postCommentData = async function(ctx) {
   let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
   console.log(postData)
-  console.log(ctx.session, 'session数据');
+  console.log(ctx.session, '获取session数据');
   try {
     await mssql.connect(dataBase);
-    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES ( openId, postData.commentText, ${currentDateStamp})`;
+    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES ( openId, ${postData.commentText}, ${currentDateStamp})`;
     console.log(querySql)
     const queryRes = await mssql.query(querySql);
     mssql.close();
