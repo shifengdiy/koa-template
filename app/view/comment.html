@@ -55,7 +55,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             $.ajax({
-              url: 'postCommentMsg',
+              url: '/postCommentData',
               type: 'post',
               dataType: 'json',
               data: {

@@ -48,7 +48,7 @@
     mounted: function() {
       var self = this;
       $.ajax({
-        url: 'getCommentList',
+        url: '/getCommentLisData',
         type: 'post',
         dataType: 'json',
         success: function(res) {
