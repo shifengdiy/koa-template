@@ -31,6 +31,7 @@ const getOpenIdByCode = function (code, resolve){
       
       resolve(body.openid);
     } else {
+      console.log('抛出异常')
       throw (err);
     }
   })
