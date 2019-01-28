@@ -25,14 +25,11 @@ const getOpenIdByCode = function (code, resolve){
   };
 
   request(reqOptions, function (err, res, body) {
+    console.log(body, '获取openid');
     console.log(err, body, '请求数据')
     if (!err && res.statusCode == 200) {
-      console.log(body, '获取openid');
+      
       resolve(body.openid);
-
-      //缓存全局webaccessToken
-      global.webAccessToken = body.access_token;
-      global.webRefreshAccessToken = body.refresh_token;
     } else {
       throw (err);
     }
@@ -52,7 +49,11 @@ const refreshWebAccessToken = function(refreshToken){
 
     request(reqOptions, function (err, res, body) {
       if (!err && res.statusCode == 200) {
-        resolve(body)
+        resolve(body);
+
+        //缓存全局webaccessToken
+        global.webAccessToken = body.access_token;
+        global.webRefreshAccessToken = body.refresh_token;
       } else {
         throw (err);
       }

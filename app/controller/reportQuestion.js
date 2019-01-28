@@ -83,7 +83,7 @@ const postCommentData = async function(ctx) {
     await mssql.connect(dataBase);
     let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES ("${openId}", "${postData.commentText}", "${currentDateStamp}")`;
     console.log(querySql)
-    const queryRes = await mssql.query(`INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`);
+    const queryRes = await mssql.query`INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
