@@ -46,6 +46,7 @@
     },
     methods: {
       submitForm(formName) {
+        var self = this;
         // var loading = this.$loading({
         //   lock: true,
         //   text: '正在提交',
@@ -59,7 +60,7 @@
               type: 'POST',
               dataType: 'json',
               data: {
-                commentText: this.commentText,
+                commentText: self.ruleForm.commentText,
               },
               success: function(res) {
                 if(res.success){ 

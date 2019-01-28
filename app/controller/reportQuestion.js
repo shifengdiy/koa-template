@@ -75,9 +75,10 @@ const postCommentData = async function(ctx) {
   let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
   console.log(postData)
+  console.log(ctx.session, 'session数据');
   try {
     await mssql.connect(dataBase);
-    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES ( openId, postData.commentText, ${currentDateStamp})`;
     console.log(querySql)
     const queryRes = await mssql.query(querySql);
     mssql.close();

@@ -5,6 +5,7 @@ const getWebAccessTokenByCode = async function(code, ctx){
   //判断openid是否存在，如果存在说明请求已经存在，web_access_token已经再刷新
   if(!ctx.session.openId){
     const reqRes = await getOpenIdByCode(code);
+    console.log(reqRes,'返回结果')
     ctx.session.openId = reqRes.openid;
 
     //缓存全局webaccessToken
