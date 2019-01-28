@@ -1,7 +1,8 @@
 const request = require('request');
 const { appId, appSecret } = require('../config/wechat.config');
 
-const getWebAccessTokenByCode = function(code){ 
+const getWebAccessTokenByCode = function(code){
+  console.log(code) 
   return new Promise(function(resolve, reject) {
     let getTokenUrl = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appId}&secret=${appSecret}&code=${code}&grant_type=authorization_code`;
 
@@ -11,6 +12,7 @@ const getWebAccessTokenByCode = function(code){
       json: true,
     };
     //判断openid是否存在，如果存在说明请求已经存在，web_access_token已经再刷新 
+    console.log('web_access_token已经再刷新 ')
     request(reqOptions, function (err, res, body) {
       console.log(body, '获取openid');
       console.log(err, body, '请求数据')
