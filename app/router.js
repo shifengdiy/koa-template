@@ -25,10 +25,21 @@ router.get('/getOrganInfoView', getOrganInfoView);
  * 市民互动的相关信息处理
  * 包括市民留言，留言处理，故障上报和回复
  */
-const { getCommentView, getCommentListView, getReportQuestionView } = require('./controller/reportQuestion.js');
+const { 
+  getCommentView,
+  getCommentListView,
+  getReportQuestionView,
+  getCommentLisData,
+  postCommentData,
+  postDeviceDefualtData,
+  getDeviceDefaultListData, } = require('./controller/reportQuestion.js');
 router.get('/getCommentView', getCommentView);
 router.get('/getCommentListView', getCommentListView);
 router.get('/getReportQuestionView', getReportQuestionView);
+router.post('/getCommentLisData', getCommentLisData);
+router.post('/postCommentData', postCommentData);
+router.post('/postDeviceDefualtData', postDeviceDefualtData);
+router.post('/getDeviceDefaultListData', getDeviceDefaultListData);
 
 
 module.exports = function(app) {
