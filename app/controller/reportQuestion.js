@@ -49,6 +49,7 @@ const getCommentLisData = async function(ctx) {
     await mssql.connect(dataBase);
     let querySql = `select * from dbo.commentList where openId=${openId}`;
     const queryRes = await mssql.query(querySql);
+    mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
       resObj.success = true;
@@ -72,11 +73,13 @@ const postCommentData = async function(ctx) {
   let openId = ctx.session.openId;
   let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
-
+  console.log(postData)
   try {
     await mssql.connect(dataBase);
-    let querySql = `INSERT INTO commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    let querySql = `INSERT INTO dbp.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    console.log(querySql)
     const queryRes = await mssql.query(querySql);
+    mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
       resObj.success = true;
@@ -104,6 +107,7 @@ const postDeviceDefualtData = async function(ctx) {
     await mssql.connect(dataBase);
     let querySql = `INSERT INTO reportQuestion (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
     const queryRes = await mssql.query(querySql);
+    mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
       resObj.success = true;
@@ -128,6 +132,7 @@ const getDeviceDefaultListData = async function(ctx){
     await mssql.connect(dataBase);
     let querySql = `select * from dbo.reportQuestion where openId=${openId}`;
     const queryRes = await mssql.query(querySql);
+    mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
       resObj.success = true;

@@ -52,7 +52,12 @@
         type: 'post',
         dataType: 'json',
         success: function(res) {
-          self.commentList = res;
+          if(res.success){
+            self.commentList = res.body;
+          } else {
+            self.commentList = [];
+          }
+          
         },
         error: function(err) {
           
