@@ -50,7 +50,7 @@ const refreshWebAccessToken = function(refreshToken){
 
     request(reqOptions, function (err, res, body) {
       if (!err && res.statusCode == 200) {
-        resolve(body)
+        resolve(body.openid)
       } else {
         throw (err);
       }
