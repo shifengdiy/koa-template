@@ -2,15 +2,15 @@ const fs = require('fs');
 
 const { dataBase } = require('../config/app.config');
 const mssql = require('mssql'); 
+const { getWebAccessTokenByCode } = require('../service/wechatTokenRequest');
 
 //获取留言视图
 const getCommentView = async function(ctx) {
-  const code = ctx.query.code;
-  const { getWebAccessTokenByCode } = require('../service/wechatTokenRequest');
+  const code = ctx.query.code; 
 
   //设置openid到session，设置acess_token定时刷新
   if(!ctx.session.openId){
-    var a = await getWebAccessTokenByCode(code);
+    var a = getWebAccessTokenByCode(code);
     console.log(a, '这是结果')
   }
   

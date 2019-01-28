@@ -13,6 +13,7 @@ const getWebAccessTokenByCode = function(code){
     };
     //判断openid是否存在，如果存在说明请求已经存在，web_access_token已经再刷新 
     console.log('web_access_token已经再刷新 ')
+    return 'jieguo'
   //   request(reqOptions, function (err, res, body) {
   //     console.log(body, '获取openid');
   //     console.log(err, body, '请求数据')
