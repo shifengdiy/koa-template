@@ -43,7 +43,26 @@ const getReportQuestionView = function(ctx) {
 
 //查询留言信息列表
 const getCommentLisData = function(ctx) {
-  
+  const openId = ctx.session.openId;
+  const resObj = {};
+  try {
+    await mssql.connect(dataBase);
+    let querySql = `select * from dbo.commentList where openId=${openId}`;
+    const queryRes = await mssql.query(querySql);
+
+    if (queryRes.rowsAffected[0] == 1) {
+      resObj.success = true;
+    } else {
+      resObj.success = false;
+      resObj.body = queryRes;
+    }
+  } catch (error) {
+    resObj.success = false;
+    resObj.body = error;
+  }
+
+  ctx.response.type = 'json';
+  ctx.response.body = JSON.stringify(resObj);
 }
 
 //提交用户当前留言
@@ -51,10 +70,23 @@ const postCommentData = async function(ctx) {
   await mssql.connect(dataBase);
   let postData = ctx.request.body;
   let openId = ctx.session.openId;
-
-  let querySql = `insert`;
-  const queryRes = await mssql.query(querySql);
+  let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
+
+  try {
+    let querySql = `INSERT INTO commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    const queryRes = await mssql.query(querySql);
+
+    if (queryRes.rowsAffected[0] == 1) {
+      resObj.success = true;
+    } else {
+      resObj.success = false;
+      resObj.body = queryRes;
+    }
+  } catch (error) {
+    resObj.success = false;
+    resObj.body = error;
+  }
 
   ctx.response.type = 'json';
   ctx.response.body = JSON.stringify(resObj);
