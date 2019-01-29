@@ -68,7 +68,6 @@
 <script>
   // init vConsole
   var vConsole = new VConsole();
-  console.log('Hello world');
 
   var reportQuestionEl = new Vue({
     el: '.app-page',
@@ -170,7 +169,7 @@
         this.$refs[formName].resetFields();
       },
       timeStamp2Date: function(timeStamp) {
-        var date_obj = new Date(tiemstamp);
+        var date_obj = new Date(timeStamp);
 				var years = date_obj.getFullYear();
 				var month = date_obj.getMonth() < 9 ? ('0' + (date_obj.getMonth() + 1)) : (date_obj.getMonth() + 1);
 				var day = date_obj.getDate() < 10 ? ('0' + date_obj.getDate()) : date_obj.getDate();
