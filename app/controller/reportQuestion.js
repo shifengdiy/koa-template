@@ -88,6 +88,7 @@ const getCommentLisData = async function (ctx) {
     let querySql = `select * from dbo.commentList where openId=${openId}`;
     const queryRes = await mssql.query`select * from dbo.commentList where openId=${openId}`;
     mssql.close();
+    console.log(queryRes, '数据查询');
 
     resObj.success = true;
     resObj.body = queryRes.recordset;
