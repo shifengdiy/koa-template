@@ -8,8 +8,7 @@ const { getBaseAccessToken, getJsapiTicket, initMenuBar } = require('../controll
 
 module.exports = async function() {
   //首先第一次执行，之后定时执行
-  //global.access_token = await getBaseAccessToken();
-  global.access_token = `18_3GwSVA71FIaTTqGZtfZiMhHY3NKMI6hAGTFnrQNRzdOvlCBu9uk9956I3TTxfBgHdf1X1ydaYRSbCgGQfcWKr5kZPvjp4Pd7gMyrIaXMDeDqcd9c4lKrYhrOWhgSUKdAIACEU`; 
+  global.access_token = await getBaseAccessToken();
   global.jsapi_ticket = await getJsapiTicket();
   console.log('凭证获取完毕\n', global.access_token, '\n', global.jsapi_ticket);
   
