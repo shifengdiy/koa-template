@@ -10,4 +10,10 @@
   text-align: center;
   margin-top: 20px; }
 
+.app-page .el-tabs .el-tabs__nav {
+  width: 100%; }
+  .app-page .el-tabs .el-tabs__nav .el-tabs__item {
+    width: 50%;
+    text-align: center; }
+
 /*# sourceMappingURL=reportQuestion.css.map */

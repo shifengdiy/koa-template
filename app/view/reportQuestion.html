@@ -14,31 +14,54 @@
 </head>
 <body>
   <div class="app-page">
-    <div class="title">故障上报</div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="top" class="demo-ruleForm">
-      <el-form-item label="设施名称" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
-      </el-form-item>
- 
-      <el-form-item label="是否需要回访" prop="isReact">
-        <el-switch v-model="ruleForm.isReact"></el-switch>
-      </el-form-item>
-      <template v-if="ruleForm.isReact">
-        <el-form-item label="姓名" prop="reporterName">
-          <el-input v-model="ruleForm.reporterName"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" prop="reporterPhone">
-          <el-input v-model="ruleForm.reporterPhone"></el-input>
-        </el-form-item>
-      </template>
-      <el-form-item label="故障内容" prop="reportContent">
-        <el-input type="textarea" :autosize="{minRows: 4}" v-model="ruleForm.reportContent"></el-input>
-      </el-form-item>
-      <el-form-item class="operate-panel">
-        <el-button type="primary" @click="submitForm('ruleForm')">立即提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="故障上报" name="first">
+        <div class="title">故障上报</div>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="top" class="demo-ruleForm">
+          <el-form-item label="设施名称" prop="name">
+            <el-input v-model="ruleForm.name"></el-input>
+          </el-form-item>
+
+          <el-form-item label="是否需要回访" prop="isReact">
+            <el-switch v-model="ruleForm.isReact"></el-switch>
+          </el-form-item>
+          <template v-if="ruleForm.isReact">
+            <el-form-item label="姓名" prop="reporterName">
+              <el-input v-model="ruleForm.reporterName"></el-input>
+            </el-form-item>
+            <el-form-item label="电话" prop="reporterPhone">
+              <el-input v-model="ruleForm.reporterPhone"></el-input>
+            </el-form-item>
+          </template>
+          <el-form-item label="故障内容" prop="reportContent">
+            <el-input type="textarea" :autosize="{minRows: 4}" v-model="ruleForm.reportContent"></el-input>
+          </el-form-item>
+          <el-form-item class="operate-panel">
+            <el-button type="primary" @click="submitForm('ruleForm')">立即提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="上报历史" name="second">
+        <div class="report-card" v-for="item in reportList">
+          <div class="item-title">设施名称</div>
+          <div class="item-content">{{item.deviceName}}</div>
+          <div class="item-title">故障内容</div>
+          <div class="item-content">{{item.reportContent}}</div>
+          <div class="item-title">上报时间</div>
+          <div class="item-content">{{item.reportDate}}</div>
+          <div class="item-title">是否需要反馈</div>
+          <div class="item-content">{{item.isReact}}</div>
+          <template v-if="item.isReact">
+            <div class="item-title">联系人</div>
+            <div class="item-content">{{item.contactorName}}</div>
+            <div class="item-title">联系电话</div>
+            <div class="item-content">{{item.contactorPhone}}</div>
+          </template>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+
   </div>
 
 <script>
@@ -46,9 +69,13 @@
     el: '.app-page',
     name: 'reportQuestionEl',
     data: {
+      activeName: 'first',
+      reportList: [],
       ruleForm: {
         name: '', 
         isReact: false,
+        reporterName: '',
+        reporterPhone: '',
         reportContent: ''
       },
       rules: {
@@ -82,10 +109,48 @@
       }
     },
     methods: {
+      handleClick: function(tab){
+        var self = this;
+        if(tab.label == '上报历史'){
+          $.ajax({
+            url: '/getDeviceDefaultListData',
+            type: 'post',
+            dataType: 'json',
+            success: function(res) {
+              if(res.success){
+                self.reportList = res.body.map(function(el, index){
+                  var commentDateStr = self.timeStamp2Date(Number(el.reportDate));
+                  return item;
+                });
+              } else {
+                self.reportList = [];
+              }
+              
+            },
+            error: function(err) {
+              
+            },
+          })
+        }
+      },
       submitForm(formName) {
+        var formData = this.ruleForm;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            $.ajax({
+              url: '/postDeviceDefualtData',
+              type: 'POST',
+              dataType: 'json',
+              data: formData,
+              success: function(res) {
+                if(res.success){ 
+                  alert('上报成功');
+                }
+              },
+              error: function(err) {
+                alert('上报失败，请返回公众号重试');
+              }
+            })
           } else {
             alert('信息填写不正确');
             return false;
@@ -94,7 +159,18 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      },
+      timeStamp2Date: function(timeStamp) {
+        var date_obj = new Date(tiemstamp);
+				var years = date_obj.getFullYear();
+				var month = date_obj.getMonth() < 9 ? ('0' + (date_obj.getMonth() + 1)) : (date_obj.getMonth() + 1);
+				var day = date_obj.getDate() < 10 ? ('0' + date_obj.getDate()) : date_obj.getDate();
+				var hour = date_obj.getHours() < 10 ? ('0' + date_obj.getHours()) : date_obj.getHours();
+				var minute = date_obj.getMinutes() < 10 ? ('0' + date_obj.getMinutes()) : date_obj.getMinutes();
+				var second = date_obj.getSeconds() < 10 ? ('0' + date_obj.getSeconds()) : date_obj.getSeconds();
+				var date_str = `${years}-${month}-${day} ${hour}:${minute}:${second}`;
+				return date_str;
+      },
     },
   })
 </script>

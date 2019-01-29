@@ -108,10 +108,12 @@ const postDeviceDefualtData = async function(ctx) {
   let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
 
+  postData.isReact = Number(postData.isReact).toString();
+
   try {
     await mssql.connect(dataBase);
     let querySql = `INSERT INTO reportQuestion (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
-    const queryRes = await mssql.query`INSERT INTO reportQuestion (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    const queryRes = await mssql.query`INSERT INTO reportQuestion (deviceName, reportContent, reportDate, contactorName, contactorPhone, isReact, openId) VALUES (${postData.name}, ${postData.reportContent}, ${currentDateStamp}, ${postData.reporterName}, ${postData.reporterPhone}, ${postData.isReact}, ${openId})`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
