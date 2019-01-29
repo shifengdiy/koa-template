@@ -138,8 +138,8 @@ const getDeviceDefaultListData = async function(ctx){
   const resObj = {};
   try {
     await mssql.connect(dataBase);
-    let querySql = `select * from dbo.reportQuestion where openId=${openId}`;
-    const queryRes = await mssql.query(querySql);
+    let querySql = `select * from dbo.reportQuestion where openId = ${openId}`;
+    const queryRes = await mssql.query`${querySql}`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
