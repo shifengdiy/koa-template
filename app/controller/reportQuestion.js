@@ -21,7 +21,7 @@ const getCommentView = async function(ctx) {
 }
 
 //获取留言列表页面
-const getCommentListView = function(ctx) {
+const getCommentListView = async function(ctx) {
   const code = ctx.query.code; 
 
   //设置openid到session，设置acess_token定时刷新
@@ -35,9 +35,9 @@ const getCommentListView = function(ctx) {
 } 
 
 //获取故障上报页面
-const getReportQuestionView = function(ctx) {
+const getReportQuestionView = async function(ctx) {
   const code = ctx.query.code;
-  
+
   //设置openid到session，设置acess_token定时刷新
   if (!ctx.session.openId) {
     let openId = await getWebAccessTokenByCode(code);
