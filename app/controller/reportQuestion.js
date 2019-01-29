@@ -48,14 +48,20 @@ const getReportQuestionView = async function(ctx) {
   ctx.response.body = fs.createReadStream('./app/view/reportQuestion.html');
 }
 
-//查询留言信息列表
-const getCommentLisData = async function(ctx) {
-  const openId = ctx.session.openId;
-  const resObj = {};
+//提交用户当前留言
+const postCommentData = async function(ctx) {
+  
+  let postData = ctx.request.body;
+  let openId = ctx.session.openId;
+  let currentDateStamp = new Date().getTime().toString();
+  let resObj = {};
+  console.log(postData)
+  console.log(ctx.session, '获取session数据');
   try {
     await mssql.connect(dataBase);
-    let querySql = `select * from dbo.commentList where openId=${openId}`;
-    const queryRes = await mssql.query(querySql);
+    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES ("${openId}", "${postData.commentText}", "${currentDateStamp}")`;
+    console.log(querySql)
+    const queryRes = await mssql.query`INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
@@ -73,20 +79,14 @@ const getCommentLisData = async function(ctx) {
   ctx.response.body = JSON.stringify(resObj);
 }
 
-//提交用户当前留言
-const postCommentData = async function(ctx) {
-  
-  let postData = ctx.request.body;
-  let openId = ctx.session.openId;
-  let currentDateStamp = new Date().getTime().toString();
-  let resObj = {};
-  console.log(postData)
-  console.log(ctx.session, '获取session数据');
+//查询留言信息列表
+const getCommentLisData = async function (ctx) {
+  const openId = ctx.session.openId;
+  const resObj = {};
   try {
     await mssql.connect(dataBase);
-    let querySql = `INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES ("${openId}", "${postData.commentText}", "${currentDateStamp}")`;
-    console.log(querySql)
-    const queryRes = await mssql.query`INSERT INTO dbo.commentList (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
+    let querySql = `select * from dbo.commentList where openId=${openId}`;
+    const queryRes = await mssql.query`${querySql}`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
@@ -139,7 +139,7 @@ const getDeviceDefaultListData = async function(ctx){
   try {
     await mssql.connect(dataBase);
     let querySql = `select * from dbo.reportQuestion where openId = ${openId}`;
-    const queryRes = await mssql.query`select * from dbo.reportQuestion where openId = ${openId}`;
+    const queryRes = await mssql.query`select * from dbo.reportQuestion where openId=${openId}`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
