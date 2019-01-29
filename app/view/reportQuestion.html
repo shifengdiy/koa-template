@@ -119,7 +119,10 @@
             success: function(res) {
               if(res.success){
                 self.reportList = res.body.map(function(el, index){
+                  var item = {};
                   var commentDateStr = self.timeStamp2Date(Number(el.reportDate));
+                  item = el;
+                  item.reportDate = commentDateStr;
                   return item;
                 });
               } else {

@@ -140,6 +140,7 @@ const getDeviceDefaultListData = async function(ctx){
     let querySql = `select * from dbo.reportQuestion where openId = ${openId}`;
     const queryRes = await mssql.query`select * from dbo.reportQuestion where openId=${openId}`;
     mssql.close();
+    console.log(queryRes);
 
     resObj.success = true;
     resObj.body = queryRes.recordset;

@@ -49,6 +49,7 @@
           if(res.success){
             self.commentList = res.body.map(function(el, index){
               var commentDateStr = self.timeStamp2Date(Number(el.commentDate));
+              var item = {};
               item.commentContent = el.commentText;
               item.commentDate = commentDateStr;
               if(el.isReply){
