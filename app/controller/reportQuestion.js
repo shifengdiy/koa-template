@@ -9,10 +9,9 @@ const getCommentView = async function(ctx) {
   const code = ctx.query.code; 
 
   //设置openid到session，设置acess_token定时刷新
-  if(ctx.session.openId){
+  if(!ctx.session.openId){
     let openId = await getWebAccessTokenByCode(code);
     ctx.session.openId = openId;
-    console.log(openId, 'openid')
   } 
 
   console.log(ctx.session, 'session数据');
@@ -23,11 +22,13 @@ const getCommentView = async function(ctx) {
 
 //获取留言列表页面
 const getCommentListView = function(ctx) {
-  const code = ctx.query.code;
-  const { getWebAccessTokenByCode } = require('../service/wechatTokenRequest');
+  const code = ctx.query.code; 
 
   //设置openid到session，设置acess_token定时刷新
-  getWebAccessTokenByCode(code, ctx);
+  if (!ctx.session.openId) {
+    let openId = await getWebAccessTokenByCode(code);
+    ctx.session.openId = openId;
+  } 
 
   ctx.response.type = 'html';
   ctx.response.body = fs.createReadStream('./app/view/commentList.html');
@@ -36,10 +37,12 @@ const getCommentListView = function(ctx) {
 //获取故障上报页面
 const getReportQuestionView = function(ctx) {
   const code = ctx.query.code;
-  const { getWebAccessTokenByCode } = require('../service/wechatTokenRequest');
-
+  
   //设置openid到session，设置acess_token定时刷新
-  getWebAccessTokenByCode(code, ctx);
+  if (!ctx.session.openId) {
+    let openId = await getWebAccessTokenByCode(code);
+    ctx.session.openId = openId;
+  } 
 
   ctx.response.type = 'html';
   ctx.response.body = fs.createReadStream('./app/view/reportQuestion.html');
