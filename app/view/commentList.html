@@ -17,10 +17,10 @@
           <div>留言</div>
           <div class="date">{{item.commentDate}}</div>
       </div>
-      <div class="comment-body">
+      <div class="comment-body">  
         {{item.commentContent}}
       </div>
-      <div class="show-replay" @click="showReply(item)" v-show="!item.isShowReply">查看回复</div>
+      <div class="show-replay" @click="showReply(item)" v-if="item.isReply" v-show="!item.isShowReply">查看回复</div>
       <div class="reply-panel" v-show="item.isShowReply">
         <div class="reply-header">
           <div>留言回复</div>
@@ -37,13 +37,7 @@
     el: '.app-page',
     name: 'commentListEl',
     data: {
-      commentList: [{
-        replyContent: 'Google 的免费翻译服务可提供简体中文和另外100 多种语言之间的互译功能，可让您即时翻译字词、短语和网页内容。',
-        replyDate: '2018-02-03',
-        commentContent: 'Google 的免费翻译服务可提供简体中文和另外100 多种语言之间的互译功能，可让您即时翻译字词、短语和网页内容。',
-        commentDate: '2019-02-03',
-        isShowReply: false,
-      }]
+      commentList: []
     },
     mounted: function() {
       var self = this;
@@ -53,7 +47,19 @@
         dataType: 'json',
         success: function(res) {
           if(res.success){
-            self.commentList = res.body;
+            self.commentList = res.body.map(function(el, index){
+              var commentDateStr = self.timeStamp2Date(Number(el.commentDate));
+              item.commentContent = el.commentText;
+              item.commentDate = commentDateStr;
+              if(el.isReply){
+                var replyDateStr = self.timeStamp2Date(Number(el.replyDate));
+                item.replyContent = el.replyText;
+                item.replyDate = replyDateStr;
+                item.isReply = el.isReply;
+              }
+              item.isShowReply = false;
+              return item;
+            });
           } else {
             self.commentList = [];
           }
@@ -70,6 +76,17 @@
       },
       collapseReply: function(item) {
         item.isShowReply = false;
+      },
+      timeStamp2Date: function(timeStamp) {
+        var date_obj = new Date(tiemstamp);
+				var years = date_obj.getFullYear();
+				var month = date_obj.getMonth() < 9 ? ('0' + (date_obj.getMonth() + 1)) : (date_obj.getMonth() + 1);
+				var day = date_obj.getDate() < 10 ? ('0' + date_obj.getDate()) : date_obj.getDate();
+				var hour = date_obj.getHours() < 10 ? ('0' + date_obj.getHours()) : date_obj.getHours();
+				var minute = date_obj.getMinutes() < 10 ? ('0' + date_obj.getMinutes()) : date_obj.getMinutes();
+				var second = date_obj.getSeconds() < 10 ? ('0' + date_obj.getSeconds()) : date_obj.getSeconds();
+				var date_str = `${years}-${month}-${day} ${hour}:${minute}:${second}`;
+				return date_str;
       },
     }
   })
