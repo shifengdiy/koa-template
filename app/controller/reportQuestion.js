@@ -89,12 +89,8 @@ const getCommentLisData = async function (ctx) {
     const queryRes = await mssql.query`select * from dbo.commentList where openId=${openId}`;
     mssql.close();
 
-    if (queryRes.rowsAffected[0] == 1) {
-      resObj.success = true;
-    } else {
-      resObj.success = false;
-      resObj.body = queryRes;
-    }
+    resObj.success = true;
+    resObj.body = queryRes.recordset;
   } catch (error) {
     resObj.success = false;
     resObj.body = error;
@@ -114,7 +110,7 @@ const postDeviceDefualtData = async function(ctx) {
   try {
     await mssql.connect(dataBase);
     let querySql = `INSERT INTO reportQuestion (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
-    const queryRes = await mssql.query(querySql);
+    const queryRes = await mssql.query`INSERT INTO reportQuestion (openId, commentText, commentDate) VALUES (${openId}, ${postData.commentText}, ${currentDateStamp})`;
     mssql.close();
 
     if (queryRes.rowsAffected[0] == 1) {
@@ -142,12 +138,8 @@ const getDeviceDefaultListData = async function(ctx){
     const queryRes = await mssql.query`select * from dbo.reportQuestion where openId=${openId}`;
     mssql.close();
 
-    if (queryRes.rowsAffected[0] == 1) {
-      resObj.success = true;
-    } else {
-      resObj.success = false;
-      resObj.body = queryRes;
-    }
+    resObj.success = true;
+    resObj.body = queryRes.recordset;
   } catch (error) {
     resObj.success = false;
     resObj.body = error;
