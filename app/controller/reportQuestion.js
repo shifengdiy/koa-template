@@ -108,7 +108,11 @@ const postDeviceDefualtData = async function(ctx) {
   let currentDateStamp = new Date().getTime().toString();
   let resObj = {};
 
-  postData.isReact = Number(postData.isReact).toString();
+  if (postData.isReact == 'true'){
+    postData.isReact = '1';
+  } else {
+    postData.isReact = '0';
+  }
 
   try {
     await mssql.connect(dataBase);

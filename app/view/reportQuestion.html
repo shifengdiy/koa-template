@@ -52,7 +52,14 @@
           <div class="item-title">上报时间</div>
           <div class="item-content">{{item.reportDate}}</div>
           <div class="item-title">是否需要反馈</div>
-          <div class="item-content">{{item.isReact}}</div>
+          <div class="item-content">
+            <template v-if="item.isReact">
+              需要反馈
+            </template>
+            <template v-else>
+              无需反馈
+            </template>
+          </div>
           <template v-if="item.isReact">
             <div class="item-title">联系人</div>
             <div class="item-content">{{item.contactorName}}</div>
