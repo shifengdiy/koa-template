@@ -9,12 +9,12 @@ const getCommentView = async function(ctx) {
   const code = ctx.query.code; 
 
   //设置openid到session，设置acess_token定时刷新
-  if(!ctx.session.openId){
-    var a = getWebAccessTokenByCode(code);
-    console.log(a, '这是结果')
-  }
-  
-  ctx.session.xx = '测试'
+  if(ctx.session.openId){
+    let openId = await getWebAccessTokenByCode(code);
+    ctx.session.openId = openId;
+    console.log(openId, 'openid')
+  } 
+
   console.log(ctx.session, 'session数据');
   //返回留言视图页面
   ctx.response.type = 'html';
