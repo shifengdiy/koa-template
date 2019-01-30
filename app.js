@@ -15,6 +15,7 @@ const httpParsePlugin = require('./app/middleware/httpParse.js');
 const wechatTokenSchedule = require('./app/utils/wechatTokenSchedule.js');
 
 app.use(async function (ctx, next) {
+  //设置可接受json类型数据
   ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   await next();
 })
