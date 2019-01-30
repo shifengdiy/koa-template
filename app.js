@@ -14,6 +14,11 @@ const httpParsePlugin = require('./app/middleware/httpParse.js');
 //微信公众号的access_token和各种凭证的定时刷新
 const wechatTokenSchedule = require('./app/utils/wechatTokenSchedule.js');
 
+app.use(async function (ctx, next) {
+  ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  await next();
+})
+
 //执行中间件
 httpParsePlugin(app);
 
